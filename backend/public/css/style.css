@@ -54,6 +54,14 @@
     color: #bcbdc0;
     font-size: 20px;
   }
+
+  .top_menu .sender_wrapper {
+    width: 20%;
+    position: absolute;
+    right: 0;
+    top: 20px;
+    margin: 0 20px 3px 20px;
+  }
   
   .messages {
     position: relative;

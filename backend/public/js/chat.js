@@ -3,7 +3,9 @@ var socket = io();
 (function(){
     $("form").submit(function(e){
         e.preventDefault();
-        socket.emit('chat message', $("#message").val())
+        var sender = $("#sender").val()
+        var message = $("#message").val()
+        socket.emit('chat message', {sender:sender, message:message})
         $("#message").val("")
         return true;
     })
@@ -11,11 +13,13 @@ var socket = io();
 
 (function(){
     socket.on("received", data  =>  {
+    console.log(data)
     let  li  =  document.createElement("li");
     let  span  =  document.createElement("span");
     var  messages  =  document.getElementById("messages");
     messages.appendChild(li).append(data.message);
-    messages.appendChild(span).append("by "  +  "anonymous"  +  ": "  +  "just now");
+    messages.appendChild(span).append("by "  +  data.sender  +  ": "  +  "just now");
+    messages.scrollTop = messages.scrollHeight;
     });
 })
 
@@ -30,10 +34,9 @@ var socket = io();
         let message = document.getElementById("messages")
         let span = document.createElement("span")
         message.appendChild(li).append(data.message)
-
         messages
         .appendChild(span)
-        .append("by " + data.sender + " : " + formatTimeAgo(data.createdAt))
+        .append("by " + data.sender + " : " + formatTimeAgo(data.created_at))
     })
 })
 })

@@ -15,9 +15,11 @@
             <div class="button maximize"></div>
         </div>
         <div class="title">Chat</div>
+        <div class="sender_wrapper">
+          <input id="sender" class="sender_input" />
+        </div>
     </div>
     <ul id ="messages" class="messages">
-        
     </ul>
      
     <div class="bottom_wrapper clearfix">
@@ -42,6 +44,8 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
     <script>
+
+    let message = document.getElementById("messages")
     $(document).ready(function(){
       fetch("/chats")
           .then(data=>{
@@ -50,15 +54,16 @@
       .then(json => {
           json.map(data=>{
               let li = document.createElement("li")
-              let message = document.getElementById("messages")
               let span = document.createElement("span")
               message.appendChild(li).append(data.message)
 
               messages
               .appendChild(span)
-              .append("by " + data.sender + " : " + formatTimeAgo(data.createdAt))
+              .append("by " + data.sender + " : " + formatTimeAgo(data.created_at))
           })
-      })
+          console.log('done')
+          message.scrollTop = message.scrollHeight;
+      });
     });
     </script>
   </body>
